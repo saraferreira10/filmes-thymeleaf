@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-FilmesApplication<filmes>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.sara.filmes.FilmesApplication",
+            "projectName": "filmes",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

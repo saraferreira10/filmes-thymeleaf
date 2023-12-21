@@ -1,65 +1,38 @@
 package com.sara.filmes.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sara.filmes.lists.Listas;
 import com.sara.filmes.model.AnaliseModel;
-import com.sara.filmes.service.AnaliseService;
 
-import jakarta.validation.Valid;
-
-@RestController
+@Controller
 public class AnaliseController {
 
-    @Autowired
-    AnaliseService analiseService;
-
-    @GetMapping("/analises")
-    public List<AnaliseModel> getAll() {
-        return analiseService.getAll();
+    @GetMapping("/listar-analises")
+    public String mostrarAnalises(Model model) {
+        model.addAttribute("analises", Listas.getAnalises());
+        return "listar-analises";
     }
 
-    @GetMapping("/analises/{id}")
-    public ResponseEntity<Object> getById(@PathVariable(name = "id") Integer id) {
-        if (analiseService.getById(id) == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("análise não encontrada");
-        }
+    @GetMapping("/cadastrar-analise")
+    public String mostrarPagina(@RequestParam int idFilme,
+            Model model, @ModelAttribute AnaliseModel analise) {
+        analise.setFilme(Listas.retornarFilme(idFilme));
+        analise.setTitulo(analise.getFilme().getTitulo());
+        model.addAttribute("analise", analise);
 
-        return ResponseEntity.status(HttpStatus.OK).body(analiseService.getById(id));
+        return "cadastrar-analise";
     }
 
-    @PostMapping("/analises")
-    public ResponseEntity<AnaliseModel> save(@RequestBody @Valid AnaliseModel analiseModel) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(analiseService.save(analiseModel));
-    }
-
-    @PutMapping("/analises")
-    public ResponseEntity<Object> update(@RequestBody @Valid AnaliseModel analiseModel) {
-        var analiseAtualizada = analiseService.updateById(analiseModel, analiseModel.getId());
-
-        if (analiseAtualizada == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("análise não encontrada");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(analiseAtualizada);
-    }
-
-    @DeleteMapping("/analises/{id}")
-    public ResponseEntity<Object> delete(@PathVariable(name = "id") Integer id) {
-        if (!analiseService.exists(id)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("análise não encontrada");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(analiseService.deleteById(id));
+    @PostMapping("/cadastrar-analise")
+    public String cadastrarAnalise(@RequestParam int idFilme,
+            Model model, @ModelAttribute AnaliseModel analise) {
+        Listas.cadastrarAnalise(analise, idFilme);
+        return "redirect:/listar-filmes";
     }
 }

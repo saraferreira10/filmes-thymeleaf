@@ -22,8 +22,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "TB_ANALISE")
 public class AnaliseModel {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
@@ -33,6 +34,9 @@ public class AnaliseModel {
     @Column(length = 1000)
     @NotBlank(message = "resenha não pode ser nula")
     private String resenha;
+
+    @Column(length = 1000)
+    @NotBlank(message = "titulo não pode ser nulo")
     private String titulo;
 
     @NotNull(message = "nota não pode ser nula")

@@ -1,64 +1,41 @@
 package com.sara.filmes.controller;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
+import com.sara.filmes.lists.Listas;
 import com.sara.filmes.model.FilmeModel;
-import com.sara.filmes.service.FilmeService;
 
-import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.PostMapping;
 
-@RestController
+@Controller
 public class FilmeController {
 
-    @Autowired
-    FilmeService filmeService;
-
-    @GetMapping("/filmes")
-    public List<FilmeModel> getAll() {
-        return filmeService.getAll();
+    @GetMapping("/cadastrar-filme")
+    public String mostrarPaginaCadastro(Model model) {
+        model.addAttribute("filme", new FilmeModel());
+        return "cadastrar-filme";
     }
 
-    @GetMapping("/filmes/{id}")
-    public ResponseEntity<Object> getById(@PathVariable(name = "id") Integer id) {
-        if (filmeService.getById(id) == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("filme não encontrado");
-        }
+    @PostMapping("/cadastrar-filme")
+    public String cadastrarFilme(@ModelAttribute FilmeModel filme, Model model) {
+        Listas.cadastrarFilme(filme);
+        List<FilmeModel> filmes = Listas.getFilmes();
 
-        return ResponseEntity.status(HttpStatus.OK).body(filmeService.getById(id));
+        model.addAttribute("filmes", filmes);
+        model.addAttribute("filme", filme);
+        return "redirect:/listar-filmes";
     }
 
-    @PostMapping("/filmes")
-    public ResponseEntity<FilmeModel> save(@RequestBody @Valid FilmeModel filmeModel) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(filmeService.save(filmeModel));
+    @GetMapping("/listar-filmes")
+    public String mostrarFilmes(Model model) {
+        List<FilmeModel> filmes = Listas.getFilmes();
+        model.addAttribute("filmes", filmes);
+        return "listar-filmes";
     }
 
-    @PutMapping("/filmes")
-    public ResponseEntity<Object> update(@RequestBody @Valid FilmeModel filmeModel) {
-        var filmeAtualizado = filmeService.updateById(filmeModel, filmeModel.getId());
-
-        if (filmeAtualizado == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("filme não encontrado");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(filmeAtualizado);
-    }
-
-    @DeleteMapping("/filmes/{id}")
-    public ResponseEntity<Object> delete(@PathVariable(name = "id") Integer id) {
-        if (!filmeService.exists(id)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("filme não encontrado");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(filmeService.deleteById(id));
-    }
 }

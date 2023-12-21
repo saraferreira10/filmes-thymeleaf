@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "TB_FILMES")
 public class FilmeModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotBlank(message = "título não pode ser nulo")

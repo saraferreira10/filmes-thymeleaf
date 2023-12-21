@@ -23,12 +23,11 @@
     <header th:insert="header :: nav"></header>
     <div class="container pt-5 pb-5">
         <div class="card p-5">
-            <h3>Nova Análise</h3>
-            <br>
-            <form th:action="@{'/cadastrar-analise?idFilme='+ *{filme.id}}" th:object="${analise}" method="post">
+            <h3>Nova Análise </h3>
+            <form th:action="@{/cadastrar-analise}" th:object="${analise}" method="post">
+                <span class="badge bg-primary text-wrap text-white p-2" th:text="${analise.titulo}"></span>
                 <div class="form-group">
-                    <label for="titulo">Filme</label>
-                    <input th:field="*{titulo}" type="text" name="titulo" class="form-control" disabled required>
+                    <input th:field="*{titulo}" type="text" name="titulo" class="form-control" required hidden>
                 </div>
                 <div class="form-group">
                     <label for="id" hidden>ID</label>

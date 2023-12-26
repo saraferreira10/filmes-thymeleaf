@@ -33,21 +33,24 @@ public class AnaliseController {
         return "listar-analises";
     }
 
+    @GetMapping("")
+    public String getMethodName() {
+        return "consumindo-api";
+    }
+
     @GetMapping("/cadastrar-analise")
-    public String mostrarPagina(@RequestParam int idFilme,
-            Model model, @ModelAttribute AnaliseModel analise) {
+    public String mostrarPagina(@RequestParam Integer idFilme,
+            Model model) {
+        var analise = new AnaliseModel();
+        model.addAttribute("analise", analise);
         analise.setFilme(filmeService.getById(idFilme));
         analise.setTitulo(filmeService.getById(idFilme).getTitulo());
-        System.out.println(filmeService.getById(idFilme).getTitulo());
-        System.out.println("-----------------------------------------------------------------------------------------");
-        model.addAttribute("analise", analise);
         return "cadastrar-analise";
     }
 
     @PostMapping("/cadastrar-analise")
-    public String cadastrarAnalise(
-            Model model, @ModelAttribute AnaliseModel analise) {
+    public String cadastrarAnalise(@ModelAttribute AnaliseModel analise) {
         analiseService.save(analise);
-        return "redirect:/listar-filmes";
+        return "redirect:/listar-analises";
     }
 }

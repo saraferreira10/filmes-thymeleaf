@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "TB_ANALISE")
+@Table(name = "TB_ANALISES")
 public class AnaliseModel {
 
     @Id

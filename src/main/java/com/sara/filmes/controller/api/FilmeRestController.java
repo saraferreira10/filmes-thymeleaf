@@ -1,4 +1,4 @@
-package com.sara.filmes.controller;
+package com.sara.filmes.controller.api;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

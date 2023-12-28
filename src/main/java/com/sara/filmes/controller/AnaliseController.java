@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -24,7 +25,7 @@ public class AnaliseController {
     @Autowired
     FilmeService filmeService;
 
-    @GetMapping("/listar-analises")
+    @GetMapping("/analises/listar")
     public String mostrarAnalises(Model model) {
         List<AnaliseModel> analises = analiseService.getAll();
         List<FilmeModel> filmes = filmeService.getAll();
@@ -33,12 +34,18 @@ public class AnaliseController {
         return "listar-analises";
     }
 
-    @GetMapping("")
-    public String getMethodName() {
-        return "consumindo-api";
+    @GetMapping("/analises/editar/{id}")
+    public String editarAnalise(@PathVariable(name = "id") Integer id, Model model) {
+        if(!analiseService.exists(id)){
+            return "redirect:analises/listar";
+        }
+
+        AnaliseModel analiseModel = analiseService.getById(id);
+        model.addAttribute("analise", analiseModel);
+        return "editar-analise";
     }
 
-    @GetMapping("/cadastrar-analise")
+    @GetMapping("/analises/cadastrar")
     public String mostrarPagina(@RequestParam Integer idFilme,
             Model model) {
         var analise = new AnaliseModel();
@@ -48,9 +55,9 @@ public class AnaliseController {
         return "cadastrar-analise";
     }
 
-    @PostMapping("/cadastrar-analise")
+    @PostMapping("/analises/cadastrar")
     public String cadastrarAnalise(@ModelAttribute AnaliseModel analise) {
         analiseService.save(analise);
-        return "redirect:/listar-analises";
+        return "redirect:/analises/listar";
     }
 }

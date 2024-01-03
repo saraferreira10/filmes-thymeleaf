@@ -19,10 +19,15 @@
 </head>
 
 <body>
-    <nav class="nav">
-        <a class="nav-link" th:href="@{/filmes/listar}">Filmes</a>
-        <a class="nav-link" th:href="@{/filmes/cadastro}">Cadastrar Filme</a>
-        <a class="nav-link" th:href="@{/analises/listar}">Ver análises</a>
+    <nav class="nav px-5 d-flex flex-column flex-sm-row">
+        <div class="row flex-nowrap">
+            <a class="nav-link" th:href="@{/filmes/listar}">Filmes</a>
+            <a class="nav-link" th:href="@{/filmes/cadastro}">Cadastrar Filme</a>
+            <a class="nav-link" th:href="@{/analises/listar}">Ver análises</a>
+        </div>
+        <div class="col row d-flex justify-content-sm-end">
+            <a class="nav-link btn btn-primary" th:href="@{/}">Mudar Tema</a>
+        </div>
     </nav>
 </body>
 

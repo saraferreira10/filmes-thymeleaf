@@ -19,10 +19,10 @@
     <title>Cadastro de análise</title>
 </head>
 
-<body>
+<body th:class="${tema eq 'escuro'} ? 'bg-dark text-white' : 'bg-light text-black'">
     <header th:insert="header :: nav"></header>
     <div class="container pt-5 pb-5">
-        <div class="card p-5">
+        <div th:class="${tema eq 'escuro'} ? 'bg-dark border p-5 rounded' : 'bg-white border p-5 rounded'">
             <h3>Nova Análise </h3>
             <form th:action="@{/analises/cadastrar}" th:object="${analise}" method="post">
                 <span class="badge bg-primary text-wrap text-white p-2" th:text="${analise.titulo}"></span>

@@ -15,11 +15,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
-
     <title>Análises</title>
 </head>
 
-<body>
+<body th:class="${tema eq 'escuro'} ? 'bg-dark' : 'bg-light'">
     <header th:insert="header :: nav"></header>
     <div class="container pt-5 pb-5">
 
@@ -30,20 +29,20 @@
             <table class="table table-striped" id="tabela-analises">
                 <thead>
                     <tr>
-                        <th scope="col" class="text-center">#</th>
-                        <th scope="col" class="text-center">Filme</th>
-                        <th scope="col" class="text-center">Nota</th>
-                        <th scope="col" class="text-center">Análise</th>
-                        <th scope="col" class="text-center">#</th>
-                        <th scope="col" class="text-center">#</th>
+                        <th scope="col" th:class="${tema eq 'escuro'} ? 'text-white text-center' : 'text-black text-center'">#</th>
+                        <th scope="col" th:class="${tema eq 'escuro'} ? 'text-white text-center' : 'text-black text-center'">Filme</th>
+                        <th scope="col" th:class="${tema eq 'escuro'} ? 'text-white text-center' : 'text-black text-center'">Nota</th>
+                        <th scope="col" th:class="${tema eq 'escuro'} ? 'text-white text-center' : 'text-black text-center'">Análise</th>
+                        <th scope="col" th:class="${tema eq 'escuro'} ? 'text-white text-center' : 'text-black text-center'">#</th>
+                        <th scope="col" th:class="${tema eq 'escuro'} ? 'text-white text-center' : 'text-black text-center'">#</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="analiseAtual : ${analises}">
-                        <td th:text="${analiseAtual.id}" class="text-center"></td>
+                        <td th:text="${analiseAtual.id}" th:class="${tema eq 'escuro'} ? 'text-white text-center' : 'text-black text-center'"></td>
                         <td th:id="'tdId' + ${analiseAtual.titulo}" th:text="${analiseAtual.titulo}"
-                            class="text-center"></td>
-                        <td th:text="${analiseAtual.nota}" class="text-center"></td>
+                            th:class="${tema eq 'escuro'} ? 'text-white text-center' : 'text-black text-center'"></td>
+                        <td th:text="${analiseAtual.nota}" th:class="${tema eq 'escuro'} ? 'text-white text-center' : 'text-black text-center'"></td>
                         <td class="text-center">
                             <button type="button" class="btn btn-primary" data-toggle="modal"
                                 th:data-target="'#modalLong-' + ${analiseAtual.id}">

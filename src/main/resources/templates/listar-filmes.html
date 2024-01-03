@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>Filmes</title>
+
 </head>
 
-<body>
+<body th:class="${tema eq 'escuro'} ? 'bg-dark' : 'bg-light'">
     <header th:insert="header :: nav"></header>
 
     <div class="container py-5 pb-5">
@@ -17,22 +18,22 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col" class="text-center">ID</th>
-                        <th scope="col" class="text-center">Título</th>
-                        <th scope="col" class="text-center">Gênero</th>
-                        <th scope="col" class="text-center">Ano de lançamento</th>
-                        <th scope="col" class="text-center">Sinopse</th>
-                        <th scope="col" class="text-center">Resenhas</th>
-                        <th scope="col" class="text-center">#</th>
-                        <th scope="col" class="text-center">#</th>
+                        <th scope="col" th:class="${tema eq 'escuro'} ? 'text-white text-center' : 'text-black text-center'">ID</th>
+                        <th scope="col" th:class="${tema eq 'escuro'} ? 'text-white text-center' : 'text-black text-center'">Título</th>
+                        <th scope="col" th:class="${tema eq 'escuro'} ? 'text-white text-center' : 'text-black text-center'">Gênero</th>
+                        <th scope="col" th:class="${tema eq 'escuro'} ? 'text-white text-center' : 'text-black text-center'">Ano de lançamento</th>
+                        <th scope="col" th:class="${tema eq 'escuro'} ? 'text-white text-center' : 'text-black text-center'">Sinopse</th>
+                        <th scope="col" th:class="${tema eq 'escuro'} ? 'text-white text-center' : 'text-black text-center'">Resenhas</th>
+                        <th scope="col" th:class="${tema eq 'escuro'} ? 'text-white text-center' : 'text-black text-center'">#</th>
+                        <th scope="col" th:class="${tema eq 'escuro'} ? 'text-white text-center' : 'text-black text-center'">#</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="filmeAtual : ${filmes}">
-                        <th scope="row" th:text="${filmeAtual.id}" class="text-center"></th>
-                        <td th:text="${filmeAtual.titulo}" class="text-center"></td>
-                        <td th:text="${filmeAtual.genero}" class="text-center"></td>
-                        <td th:text="${filmeAtual.anoLancamento}" class="text-center"></td>
+                        <th scope="row" th:text="${filmeAtual.id}" th:class="${tema eq 'escuro'} ? 'text-white text-center' : 'text-black text-center'"></th>
+                        <td th:text="${filmeAtual.titulo}" th:class="${tema eq 'escuro'} ? 'text-white text-center' : 'text-black text-center'"></td>
+                        <td th:text="${filmeAtual.genero}" th:class="${tema eq 'escuro'} ? 'text-white text-center' : 'text-black text-center'"></td>
+                        <td th:text="${filmeAtual.anoLancamento}" th:class="${tema eq 'escuro'} ? 'text-white text-center' : 'text-black text-center'"></td>
                         <td class="text-center">
                             <button type="button" class="btn btn-primary" data-toggle="modal"
                                 th:data-target="'#modalLong-' + ${filmeAtual.id}">
@@ -114,7 +115,7 @@
                     url: url,
                     method: 'DELETE',
                     success: function (data) {
-                        alert("Filme excluído");   
+                        alert("Filme excluído");
                         window.location.reload();
                     },
                     error: function () {
